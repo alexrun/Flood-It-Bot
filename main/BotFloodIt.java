@@ -3,19 +3,19 @@ package main;
 import java.util.ArrayList;
 
 /**
- * Класс логики бота.
+ * Clase lógica bot.
  * @author aNNiMON
  */
 public class BotFloodIt {
     
-    /* Количество цветов в игре */
+    /* Número de colores en el juego */
     private static final int MAX_COLORS = 6;
-    /* На сколько шагов вперёд просчитывать ход */
+    /* ¿Cuántos pasos recuento carrera hacia adelante? */
     private static final int FILL_STEPS = 4;
     
-    /* Игровое поле */
+    /* El campo de juego */
     private byte[][] table;
-    /* Цвета, соответствующие ID */
+    /* Color correspondiente al ID */
     private int[] colors;
 
     public BotFloodIt(int[][] table) {
@@ -27,16 +27,16 @@ public class BotFloodIt {
     }
     
     /**
-     * Получить цвета клеток в палитре
-     * @return массив цветов RGB
+     * Obtener el color de las células de la paleta
+     * @ Devolver una matriz de colores RGB
      */
     public int[] getColors() {
         return colors;
     }
     
     /**
-     * Получить последовательность заливки цветов
-     * @return массив с идентификаторами цветов для заливки
+     * Obtener la secuencia del relleno de color
+     * @ Devolver una matriz de ID para el color de relleno
      */
     public byte[] getFillSequence() {
         byte[][] copyTable = copyTable(table);
@@ -52,28 +52,28 @@ public class BotFloodIt {
     }
     
     /*
-     * Получить индекс следующего цвета для заливки
+     * Obtener el índice del color junto a llenar
      */
     private byte getNextFillColor(byte[][] table) {
-        // Количество вариантов заливок
+        // Número de opciones llena
         int fillSize = (int) Math.pow(MAX_COLORS, FILL_STEPS);
         int[] fillRate = new int[fillSize];
-        // Заполняем значениями степени заливки
+        // Rellenar los valores del grado de llenado
         int[] fillPow = new int[FILL_STEPS];
         for (int i = 0; i < FILL_STEPS; i++) {
             fillPow[i] = (int) Math.pow(MAX_COLORS, i);
         }
-        // Заливаем FILL_STEPS раз MAX_COLORS вариантов
+        // Llenar FILL_STEPS MAX_COLORS opciones de tiempo
         for (int i = 0; i < fillSize; i++) {
             byte[][] iteration = copyTable(table);
             for (int j = 0; j < FILL_STEPS; j++) {
                 byte fillColor =  (byte) (i / fillPow[j] % MAX_COLORS);
                 fillTable(iteration, fillColor);
             }
-            // Подсчитываем число залитых ячеек
+            // Cuenta la cantidad de celdas llenas
             fillRate[i] = getFillCount(iteration);
         }
-        // Теперь ищем максимально залитый участок из FILL_STEPS итераций заливки
+        // Ahora busca la máxima área inundada de iteraciones FILL_STEPS llenar
         int maxArea = fillRate[0];
         int maxColor = 0;
         for (int i = 1; i < fillSize; i++) {
@@ -82,19 +82,19 @@ public class BotFloodIt {
                 maxArea = fillRate[i];
             }
         }
-        // Получаем цвет с наибольшей площадью дальнейшей заливки
+        // Obtiene el color con la mayor superficie de más de relleno
         byte colorID = (byte) (maxColor % MAX_COLORS);
         fillTable(table, colorID);
         return colorID;
     }
     
     /*
-     * Преобразование массива с цветами в массив с идентификаторами
+     * Convertir una matriz de colores en una matriz de ID
      */
     private byte[][] colorsToIds(int[][] tableColor) {
         int size = tableColor.length;
         byte[][] out = new byte[size][size];
-        int colorsReaded = 1; // сколько цветов распознано
+        int colorsReaded = 1; // número de colores reconocidos
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 int color = tableColor[i][j];
@@ -105,7 +105,7 @@ public class BotFloodIt {
                         colorsReaded++;
                         if (colorsReaded > MAX_COLORS) colorsReaded = MAX_COLORS;
                     }
-                    // Если цвет уже в палитре, то присваиваем ему ID
+                    // Si el color está en la paleta, luego asignarle ID
                     if (color == colors[k]) {
                         out[i][j] = k;
                         break;
@@ -117,9 +117,9 @@ public class BotFloodIt {
     }
     
     /**
-     * Залить заданное поле цветом color
-     * @param table игровое поле для заливки
-     * @param color цвет заливки
+     * Vierta el campo especificado el uso del color
+     * @ Param tabla el campo de juego para llenar
+     * @ Param color del color de relleno
      */
     private void fillTable(byte[][] table, byte color) {
         if (table[0][0] == color) return;
