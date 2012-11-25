@@ -99,7 +99,7 @@ public class BotFloodIt {
             for (int j = 0; j < size; j++) {
                 int color = tableColor[i][j];
                 for (byte k = 0; k < colorsReaded; k++) {
-                    // Добавляем цвет в палитру
+                    // Añadir color a la paleta
                     if (colors[k] == -1) {
                         colors[k] = color;
                         colorsReaded++;
