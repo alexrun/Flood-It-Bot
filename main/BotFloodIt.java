@@ -127,14 +127,14 @@ public class BotFloodIt {
     }
     
     /*
-     * Заливка поля по координатам
+     * Complete con las coordenadas del campo
      */
     private void fill(byte[][] table, int x, int y, byte prevColor, byte color) {
-        // Проверка на выход за границы игрового поля
+        // Salida de los límites del campo de juego
         if ( (x < 0) || (y < 0) || (x >= table.length) || (y >= table.length) ) return;
         if (table[x][y] == prevColor) {
             table[x][y] = color;
-            // Заливаем смежные области
+            // Rellenar las áreas adyacentes
             fill(table, x-1, y, prevColor, color);
             fill(table, x+1, y, prevColor, color);
             fill(table, x, y-1, prevColor, color);
@@ -143,24 +143,24 @@ public class BotFloodIt {
     }
     
     /**
-     * Получить количество залитых ячеек
-     * @param table игровое поле
+     * Obtener el número de células llenas
+     * @ Param tabla el campo de juego
      */
     private int getFillCount(byte[][] table) {
         return getCount(table, 0, 0, table[0][0]);
     }
     
     /*
-     * Подсчет залитых ячеек по координатам
+     * Contar celdas llenas en las coordenadas
      */
     private int getCount(byte[][] table, int x, int y, byte color) {
-        // Проверка на выход за границы игрового поля
+        // Salida de los límites del campo de juego
         if ( (x < 0) || (y < 0) || (x >= table.length) || (y >= table.length) ) return 0;
         int count = 0;
         if (table[x][y] == color) {
             table[x][y] = -1;
             count = 1;
-            // Считаем смежные ячейки
+            // Creen que las células adyacentes
             count += getCount(table, x-1, y, color);
             count += getCount(table, x+1, y, color);
             count += getCount(table, x, y-1, color);
@@ -170,7 +170,7 @@ public class BotFloodIt {
     }
     
     /*
-     * Проверка, залита ли вся область одним цветом
+     * Compruebe que toda la zona está llena de un color
      */
     private boolean gameCompleted(byte[][] table) {
         byte color = table[0][0];
@@ -184,7 +184,7 @@ public class BotFloodIt {
     }
     
     /*
-     * Копирование массива игрового поля
+     * Copia matriz igualdad de condiciones
      */
     private byte[][] copyTable(byte[][] table) {
         int size = table.length;
