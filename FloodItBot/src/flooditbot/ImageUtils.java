@@ -6,7 +6,7 @@ import java.util.Random;
 
 /*
  * Clase de imágenes
- * @author aNNiMON
+ * @author aNNiMON y Alexrun
  */
 public class ImageUtils {
     
@@ -31,8 +31,8 @@ public class ImageUtils {
     
     /*
      *  Diseñador para definir los ajustes
-     * @ Param imagen
-     * @ Param boardSize
+     * @Param imagen
+     * @Param boardSize
      */
     public ImageUtils(BufferedImage image, int boardSize) {
         this.image = image;
@@ -43,11 +43,11 @@ public class ImageUtils {
     
     /*
      * Diseñador para comprobar los ajustes
-     * @ Param imagen
-     * @ Param boardSize
-     * @ Param cellsize
-     * @ Param x
-     * @ Param y
+     * @Param imagen
+     * @Param boardSize
+     * @Param cellsize
+     * @Param x
+     * @Param y
      */
     public ImageUtils(BufferedImage image, int boardSize, int cellSize, int x, int y) {
         this.image = image;
@@ -102,24 +102,24 @@ public class ImageUtils {
         int size = boardSize * cellSize;
         // Importe de la imagen, que buscará el botón
         Rectangle[] partsOfImage = new Rectangle[] {
-            new Rectangle(0, board.y, board.x, size),   // слева от поля
-            new Rectangle(0, 0, w, board.y),            // сверху от поля
+            new Rectangle(0, board.y, board.x, size),   // A la izquierda de la
+            new Rectangle(0, 0, w, board.y),            // Parte superior del campo
             new Rectangle(board.x+size, board.y,
-                          w-board.x-size, size),        // справа от поля
+                          w-board.x-size, size),        // El derecho de la
             new Rectangle(0, board.y+size,
-                          w, h-board.y-size)            // снизу от поля
+                          w, h-board.y-size)            // Parte inferior del campo
         };
         
         for (int i = 0; i < partsOfImage.length; i++) {
             Rectangle rect = partsOfImage[i];
             BufferedImage part = image.getSubimage(rect.x, rect.y, rect.width, rect.height);
-            // Clipping región, en la que se busca
+            //Clipping región, en la que se busca
             boolean found = true;
             for (int j = 0; j < colors.length; j++) {
                 if (colors[i] == -1) continue;
                 Point pt = findButton(part, colors[j]);
                 if (pt != null) {
-                    // Tener en cuenta la parte compensado sólo de imagen
+                    //Tener en cuenta la parte compensado sólo de imagen
                     pt.translate(rect.x, rect.y);
                     out[j] = pt;
                 } else {
@@ -129,19 +129,19 @@ public class ImageUtils {
             }
             if (found) return out;
         }
-        // No se puede encontrar todos los puntos
+        //No se puede encontrar todos los puntos
         return null;
     }
     
     /*
      * Convierte una variedad de colores en la vista gráfica
-     * @ Param array ids identificador de secuencia
-     * @ Param array paleta de paletas de colores
-     * @ Return La secuencia de imágenes en color
+     * @Param array ids identificador de secuencia
+     * @Param array paleta de paletas de colores
+     * @Return La secuencia de imágenes en color
      */
     public BufferedImage sequenceToImage(byte[] ids, int[] palette) {
         final int size = 20; // tamaño de cada celda
-        // Romperá con 10 celdas por línea
+        //Romperá con 10 celdas por línea
         final int CELLS_IN_ROW = 10;
         int width = CELLS_IN_ROW * size;
         if (width == 0) width = size;
@@ -159,15 +159,15 @@ public class ImageUtils {
         return out;
     }
     
-    /*
-     * Преобразовать цветное изображение в монохромное.
-     * Нужно также учесть, что если поле расположено на светлом
-     * фоне, то необходимо инвертировать изображение, чтобы
-     * получить сплошную белую область на месте поля.
-     * @param pixels массив пикселей изображения
-     * @param value разделяющее значение
-     * @return массив boolean, true - белый, false - чёрный
-     */
+     /*
+      * Convierte una imagen en color a blanco y negro.
+      * También debe tenerse en cuenta que si el campo está situado en la luz
+      * Antecedentes , es necesario invertir la imagen a
+      * Obtener una zona sólido blanco en el sitio del campo.
+      * @Param pixeles una matriz de píxeles
+      * @Param valor el valor de compartir
+      * @Devolver una matriz de booleanos, verdadero - blanco, falso - Negro
+      */
     private boolean[] threshold(int[] pixels, int value) {
         boolean inverse = isBackgroundLight(MAX_COLOR_POINTS);
         if (inverse) value = 255 - value;
@@ -180,12 +180,12 @@ public class ImageUtils {
     }
     
     /*
-     * Получение состояния яркости фона.
-     * @param numPoints сколько точек нужно для определения.
-     * @return true - фон светлый, false - тёмный
-     */
+     * Obtener el estado del brillo del fondo.
+     * @Param NumPoints cuántos puntos se necesitan para determinar.
+     * @Return true - Luz de fondo, false - oscuro
+     */
     private boolean isBackgroundLight(int numPoints) {
-        // Получаем numPoints случайных точек
+        //Obtener una NumPoints puntos aleatorios
         Random rnd = new Random();
         int[] colors = new int[numPoints];
         for (int i = 0; i < numPoints; i++) {
@@ -193,7 +193,7 @@ public class ImageUtils {
             int y = rnd.nextInt(h);
             colors[i] = image.getRGB(x, y);
         }
-        // Находим среднюю яркость всех numPoints точек
+        //Buscar el brillo promedio de todos los píxeles NumPoints
         long sum = 0;
         for (int i = 0; i < numPoints; i++) {
             int brightness = getBrightness(colors[i]);
@@ -203,14 +203,14 @@ public class ImageUtils {
         return (sum > 128);
     }
     
-    /*
-     * Определить координаты левой верхней ячейки игрового поля.
-     * @param boardSize размерность поля (10x10, 14x14 и т.д.)
-     * @return координата левого верхнего прямоугольника
-     */
+   /*
+    *Determinar las coordenadas de la tabla celda superior izquierda.
+    *@Param boardSize dimensión del campo (10x10, 14x14, etc)
+    *@Return el recuadro superior izquierdo
+    */
     private Point getBoardXY(int boardSize) {
         /*
-         * Сначала подсчитаем количество белых точек по горизонтали и вертикали
+         * En primer lugar, cuente el número de píxeles blancos en la horizontal y vertical
          */
         int[] horizontal = new int[h];
         for (int i = 0; i < h; i++) {
@@ -231,16 +231,16 @@ public class ImageUtils {
         }
         
         /*
-         * Затем "отфильтруем" лишнее: подсчитаем среднее значение
-         * и на его основе уберём малозначимые строки и столбцы.
-         */
+         *A continuación, "filtrar" superfluo: Calcular la media
+         *Y, en base a cancelar irrelevantes filas y columnas.
+         */
         horizontal = filterByMean(horizontal);
         vertical = filterByMean(vertical);
         
-        /*
-         * Ищем наибольшую ненулевую последовательность.
-         * Индексы границ последовательности и будут граничными точками поля.
-         */
+       /*
+        *Buscamos más alto no homopolar.
+        *El índice de los límites de secuencia y serán los puntos de contorno del campo.
+        */
         int[] vParam = getParamsFromSequence(horizontal);
         int[] hParam = getParamsFromSequence(vertical);
         
@@ -249,16 +249,16 @@ public class ImageUtils {
         int outY = vParam[0];
         int outWidth = hParam[1];
         int outHeight = vParam[1];
-        // Подсчет размера ячейки
+        // Calcular el tamaño de la célula
         cellSize = Math.max((outWidth / boardSize), (outHeight / boardSize));
         return new Point(outX, outY); 
     }
     
     /*
-     * Фильтр последовательности от малозначимых значений.
-     * @param source последовательность вхождений цвета
-     * @return отфильтрованный массив со значениями 0 и 1
-     */
+     *Secuencia de filtro de valor insignificante.
+     *@Param fuente de la secuencia de los sucesos de color
+     *@Devolver una matriz filtrada con los valores 0 y 1
+     */
     private int[] filterByMean(int[] source) {
         long mean = 0;
         for (int i = 0; i < source.length; i++) {
@@ -271,11 +271,11 @@ public class ImageUtils {
         return source;
     }
     
-    /*
-     * Поиск самой длинной последовательности в массиве.
-     * @param source входная последовательность из нулей и единиц
-     * @return массив параметров - индекс начала последовательности и её длина
-     */
+   /*
+    *Búsqueda de la secuencia más larga en la matriz.
+    *@Param fuente de la secuencia de entrada de ceros y unos
+    *@Return variedad de opciones - el índice del inicio de la secuencia y longitud de la
+    */
     private int[] getParamsFromSequence(int[] source) {
         int maxStart = 0, start = 0;
         int maxLength = 0, length = 0;
@@ -292,7 +292,7 @@ public class ImageUtils {
                     maxLength = length;
                 }
             } else {
-                // Если предыдущий элемент был нулевым - начинаем новую последовательность
+                // Si el elemento anterior fue cero - iniciar una nueva secuencia
                 start = i;
             }
         }
@@ -300,14 +300,14 @@ public class ImageUtils {
     }
     
     /*
-     * Поиск координаты кнопки с цветом template
-     * @param img изображение, на котором будем искать
-     * @param template шаблон цвета
-     * @return координата X. Y, или null если не нашли
-     */
+     *Encuentre las coordenadas del botón con la plantilla de color
+     *@Param imagen img en el que buscamos
+     *@ Param colores de la plantilla de la plantilla
+     *@ Return la coordenada X. Y, o null si no se encuentra
+     */
     private Point findButton(BufferedImage img, int template) {
         int h2 = img.getHeight() / 2;
-        // Искать будем с середины по вертикали, так быстрее найдём
+        // Buscar el centro será vertical encontrar rápidamente
         for (int y = 0; y < h2; y++) {
             for (int x = 0; x < img.getWidth(); x++) {
                 int color = img.getRGB(x, h2 - y);
@@ -320,17 +320,17 @@ public class ImageUtils {
                 }
             }
         }
-        // Не нашли
+        // No encontrado
         return null;
     }
     
     /*
-     * Проверка на соответствие цветов друг другу
-     * @param color1 первый цвет
-     * @param color2 второй цвет
-     * @param tolerance чувствительность
-     * @return true - соответствуют, false - нет
-     */
+      *Compruebe si hay coincidencia de color entre sí
+      *@Param color1 primer color
+      *@Param color2 segundo color
+      *@Param sensibilidad tolerancia
+      *@Return true - consistente, false - no
+      */
     private boolean isEquals(int color1, int color2, int tolerance) {
         if (tolerance < 2) return color1 == color2;
 
@@ -346,10 +346,10 @@ public class ImageUtils {
     }
     
     /*
-     * Получение яркости цвета
-     * @param color исходный цвет
-     * @return яркость (0..255)
-     */
+     *Obtener la intensidad del color
+     *@Param color del color original
+     *@Return el brillo (0 .. 255)
+     */
     private int getBrightness(int color) {
         int qr = (color >> 16) & 0xff;
         int qg = (color >> 8) & 0xff;
@@ -358,9 +358,9 @@ public class ImageUtils {
     }
     
     /*
-     * Получение цвета из монохромного изображения.
-     * return true - белый, false - чёрный
-     */
+     *Obtener el color de una imagen monocromática.
+     *Devuelve true - blanco, falso - Negro
+     */
     private boolean getBWPixel(int x, int y) {
         if ((x < 0) || (y < 0) || (x >= w) || (y >= h)) return false;
         return monochrome[y * w + x];

@@ -6,12 +6,12 @@ import java.awt.image.BufferedImage;
 import javax.swing.*;
 
 /**
- * Окно приложения
- * @author aNNiMON
+ * La ventana de la aplicación
+ * @author aNNiMON y Alexrun
  */
 public class RobotFrame extends JFrame {
 
-    /* Статус работы приложения */
+    /* El estado de la aplicación */
     private boolean isRunning;
     
     private Thread robotAction;
@@ -53,8 +53,8 @@ public class RobotFrame extends JFrame {
         setTitle("FloodItBot");
         setResizable(false);
 
-        startStop.setText("Start");
         startStop.setActionCommand("");
+        startStop.setLabel("Iniciar");
         startStop.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 startStopActionPerformed(evt);
@@ -62,7 +62,7 @@ public class RobotFrame extends JFrame {
         });
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("Bot for FloodIt");
+        jLabel1.setText("Robot Para FloodIt");
         jLabel1.setFocusable(false);
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
@@ -76,12 +76,12 @@ public class RobotFrame extends JFrame {
 
         jLabel3.setText("y:");
 
-        jLabel5.setText("Window:");
+        jLabel5.setText("Ventana:");
 
-        jLabel6.setText("Cell size:");
+        jLabel6.setText("Tamaño celda:");
 
-        checkButton.setText("Check");
         checkButton.setActionCommand("");
+        checkButton.setLabel("Verificar");
         checkButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkButtonActionPerformed(evt);
@@ -89,10 +89,10 @@ public class RobotFrame extends JFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jLabel7.setText("Field size:");
+        jLabel7.setText("Tamaño campo:");
 
-        detectButton.setText("Detect");
         detectButton.setActionCommand("");
+        detectButton.setLabel("Detectar");
         detectButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 detectButtonActionPerformed(evt);
@@ -106,8 +106,8 @@ public class RobotFrame extends JFrame {
             .addGroup(windowPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(windowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(detectButton, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                    .addComponent(checkButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
+                    .addComponent(detectButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(checkButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(windowPanelLayout.createSequentialGroup()
                         .addGroup(windowPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
@@ -201,7 +201,7 @@ public class RobotFrame extends JFrame {
                     int windowX, windowY, boardSize, cellSize;
                     BufferedImage detectImage;
                     RobotUtils robot;
-                    // Получаем настройки
+                    // Obtener los ajustes
                     try {
                         robot = new RobotUtils();
                         detectImage = robot.getImage(-1, -1, -1, -1);
@@ -214,9 +214,9 @@ public class RobotFrame extends JFrame {
                         return;
                     }
                     ImageUtils iu = new ImageUtils(detectImage, boardSize, cellSize, windowX, windowY);
-                    // Обрезаем картинку до вида игрового поля
+                    // Recortar la imagen para formar el campo de juego
                     detectImage = iu.getBoardImage();
-                    // Получаем цвета из картинки
+                    // Obtiene el color de una imagen
                     int[][] table = new int[boardSize][boardSize];
                     int offset = cellSize / 2;
                     for (int i = 0; i < boardSize; i++) {
@@ -226,17 +226,17 @@ public class RobotFrame extends JFrame {
                         }
                     }
                     BotFloodIt bfi = new BotFloodIt(table);
-                    // Получаем результирующую последовательность цветов 
+                    // Obtener la secuencia resultante de colores 
                     byte[] result = bfi.getFillSequence();
                     int[] colors = bfi.getColors();
-                    // Пытаемся получить координаты кнопок для автоматической игры
+                    // Intenta conseguir las coordenadas de los botones de juego automático
                     Point[] buttons = iu.getButtons(colors);
                     if (buttons == null) {
-                        // Если не удалось найти кнопки, то просто выводим последовательность в виде картинки
+                        // Si no puede encontrar el botón, basta con enviar la secuencia como una imagen
                         BufferedImage out = iu.sequenceToImage(result, colors);
                         showImageWindow("Result: "+result.length+" steps", out);
                     } else {
-                        // Запускаем автоигру
+                        // Start Autoplay
                         robot.autoClick(buttons, result);
                     }
                     isRunning = false;
@@ -249,7 +249,7 @@ public class RobotFrame extends JFrame {
     }//GEN-LAST:event_startStopActionPerformed
 
     private void checkButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkButtonActionPerformed
-        if (isRunning) return; // нельзя проверять настройки во время работы
+        if (isRunning) return; // No se puede comprobar la configuración durante el funcionamiento
         int windowX, windowY, boardSize, cellSize;
         BufferedImage detectImage;
         RobotUtils robot;
@@ -269,7 +269,7 @@ public class RobotFrame extends JFrame {
     }//GEN-LAST:event_checkButtonActionPerformed
 
     private void detectButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_detectButtonActionPerformed
-        if (isRunning) return; // нельзя определять настройки во время работы
+        if (isRunning) return; // No se puede comprobar la configuración durante el funcionamiento
         RobotUtils robot;
         try {
             robot = new RobotUtils();
@@ -287,11 +287,11 @@ public class RobotFrame extends JFrame {
     }//GEN-LAST:event_detectButtonActionPerformed
 
     /**
-     * Показать модальное окно с изображением
-     * @param title заголовок окна
-     * @param image изображение
-     * @throws SecurityException
-     */
+     * Mostrar la ventana modal con la imagen
+     * @Param título el título de la ventana
+     * @Param imagen Imagen
+     * @Throws SecurityException
+     */
     private void showImageWindow(String title, BufferedImage image) throws SecurityException {
         ImageIcon icon = new ImageIcon(image);
         JLabel backlabel = new JLabel(icon);

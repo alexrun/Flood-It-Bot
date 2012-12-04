@@ -30,7 +30,7 @@ public class BotFloodIt {
     
     /*
      * Obtener el color de las células de la paleta
-     * @ Devolver una matriz de colores RGB
+     * @Devolver una matriz de colores RGB
      */
     public int[] getColors() {
         return colors;
@@ -38,7 +38,7 @@ public class BotFloodIt {
     
     /*
      * Obtener la secuencia del relleno de color
-     * @ Devolver una matriz de ID para el color de relleno
+     * @Devolver una matriz de ID para el color de relleno
      */
     public byte[] getFillSequence() {
         byte[][] copyTable = copyTable(table);
@@ -121,8 +121,8 @@ public class BotFloodIt {
     
     /*
      * Vierte al campo especificado el uso del color
-     * @ Param tabla el campo de juego para llenar
-     * @ Param color del color de relleno
+     * @Param tabla el campo de juego para llenar
+     * @Param color del color de relleno
      */
     private void fillTable(byte[][] table, byte color) {
         if (table[0][0] == color) return;
@@ -147,7 +147,7 @@ public class BotFloodIt {
     
     /*
      * Obtener el número de células llenas
-     * @ Param tabla el campo de juego
+     * @Param tabla el campo de juego
      */
     private int getFillCount(byte[][] table) {
         return getCount(table, 0, 0, table[0][0]);

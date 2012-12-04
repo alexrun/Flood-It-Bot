@@ -6,6 +6,11 @@ package flooditbot;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Stack;
+
+/*
+ * Clase lógica bot.
+ * @author Alexrun
+ */
  
  
 interface GoalFunction<T>

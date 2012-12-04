@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 /*
  * Trabajar con la clase Robot. 
- * @author aNNiMON
+ * @author aNNiMON y Alexrun
  */
 public class RobotUtils {
 

@@ -61,8 +61,8 @@
   <SubComponents>
     <Component class="javax.swing.JButton" name="startStop">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Start"/>
         <Property name="actionCommand" type="java.lang.String" value=""/>
+        <Property name="label" type="java.lang.String" value="Iniciar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="startStopActionPerformed"/>
@@ -71,7 +71,7 @@
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
         <Property name="horizontalAlignment" type="int" value="0"/>
-        <Property name="text" type="java.lang.String" value="Bot for FloodIt"/>
+        <Property name="text" type="java.lang.String" value="Robot Para FloodIt"/>
         <Property name="focusable" type="boolean" value="false"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
@@ -91,8 +91,8 @@
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="detectButton" alignment="0" pref="140" max="32767" attributes="0"/>
-                      <Component id="checkButton" alignment="1" pref="140" max="32767" attributes="0"/>
+                      <Component id="detectButton" alignment="0" max="32767" attributes="0"/>
+                      <Component id="checkButton" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
@@ -175,18 +175,18 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Window:"/>
+            <Property name="text" type="java.lang.String" value="Ventana:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Cell size:"/>
+            <Property name="text" type="java.lang.String" value="Tama&#xf1;o celda:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="checkButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Check"/>
             <Property name="actionCommand" type="java.lang.String" value=""/>
+            <Property name="label" type="java.lang.String" value="Verificar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkButtonActionPerformed"/>
@@ -199,15 +199,15 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="11" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Field size:"/>
+            <Property name="text" type="java.lang.String" value="Tama&#xf1;o campo:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JSpinner" name="cellSizeSpinner">
         </Component>
         <Component class="javax.swing.JButton" name="detectButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Detect"/>
             <Property name="actionCommand" type="java.lang.String" value=""/>
+            <Property name="label" type="java.lang.String" value="Detectar"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="detectButtonActionPerformed"/>
