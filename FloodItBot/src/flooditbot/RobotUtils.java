@@ -1,12 +1,12 @@
-package main;
+package flooditbot;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
-/**
- * Работа с классом Robot. 
+/*
+ * Trabajar con la clase Robot. 
  * @author aNNiMON
  */
 public class RobotUtils {
@@ -14,17 +14,17 @@ public class RobotUtils {
     private static final int CLICK_DELAY = 300;
     private Robot robot;
 
-    /**
-     * Конструктор
-     * @throws AWTException ошибка инициализации Robot
+    /*
+     * diseñador
+     * @ Throws inicialización AWTException Robot error
      */
     public RobotUtils() throws AWTException {
         robot = new Robot();
     }
 
-    /**
-     * Кликнуть в нужную точку
-     * @param click точка по которой нужно кликнуть
+    /*
+     * Haga clic en el punto deseado
+     * @ Param clic en un punto en el que deberá hacer clic en
      */
     public void clickPoint(Point click) {
         robot.mouseMove(click.x, click.y);
@@ -33,19 +33,19 @@ public class RobotUtils {
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
     }
     
-    /**
-     * Автоматически воспроизвести заданную последовательность нажатий
-     * @param buttons координаты точек, куда следует нажимать
-     * @param result последовательность id для указания на нужную кнопку
+    /*
+     *  Reproducción automática de una determinada secuencia de pulsaciones de teclas
+      * @ Param botones de las coordenadas del lugar donde desea hacer clic en
+      * @ Param id resultado secuencia para especificar la tecla deseada
      */
     public void autoClick(Point[] buttons, byte[] result) {
         for (int i = 0; i < result.length; i++) {
             clickPoint(buttons[result[i]]);
         }
     }
-    /**
-     * Автоматическое написание сообщения
-     * @param text "печатаемый" текст
+    /*
+     * Los mensajes de la escritura automática
+     * @param text "impreso" de Texto
      */
     public void writeMessage(String text) {
         for (char symbol : text.toCharArray()) {
@@ -64,8 +64,8 @@ public class RobotUtils {
     }
     
     /*
-     * Получение картинки размером [width x height] с экрана с позиции [x, y]
-     * Если width или height равны -1, то возвращаем весь экран.
+     * Conseguir la imagen a tamaño [ancho x alto] en la posición de la pantalla [x, y]
+     * Si la anchura o la altura es -1, y luego volver a la pantalla.
      */
     public BufferedImage getImage(int x, int y, int width, int height) {
         Rectangle area;

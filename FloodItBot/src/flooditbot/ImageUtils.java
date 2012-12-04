@@ -1,38 +1,38 @@
-package main;
+package flooditbot;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-/**
- * Класс обработки изображений
+/*
+ * Clase de imágenes
  * @author aNNiMON
  */
 public class ImageUtils {
     
-    /* За сколько точек мы будем узнавать преобладающий фон */
+    /* ¿Cuántos puntos aprendemos el fondo predominante? */
     private static final int MAX_COLOR_POINTS = 50;
     
-    /* Чувствительность к поиску кнопок */
+    /* Sensibilidad para buscar el botón  */
     private static final int FIND_BUTTON_TOLERANCE = 20;
     
-    /* Изображение окна */
+    /*  Imagen de la ventana  */
     private BufferedImage image;
-    /* Размер изображения */
+    /* Tamaño de la imagen */
     private int w, h;
-    /* Размерность поля */
+    /* La dimensión del campo */
     private int boardSize;
-    /* Размер ячеек */
+    /* El tamaño de las células */
     private int cellSize;
-    /* Координата угла игрового поля */
+    /* Coordenada ángulo jugar campo */
     private Point board;
-    /* Монохромное представление изображения */
+    /* Representación Negro y blanco de la imagen */
     private boolean[] monochrome;
     
-    /**
-     * Конструктор для определения настроек
-     * @param image
-     * @param boardSize 
+    /*
+     *  Diseñador para definir los ajustes
+     * @ Param imagen
+     * @ Param boardSize
      */
     public ImageUtils(BufferedImage image, int boardSize) {
         this.image = image;
@@ -41,13 +41,13 @@ public class ImageUtils {
         h = image.getHeight();
     }
     
-    /**
-     * Конструктор для проверки настроек
-     * @param image 
-     * @param boardSize
-     * @param cellSize
-     * @param x
-     * @param y 
+    /*
+     * Diseñador para comprobar los ajustes
+     * @ Param imagen
+     * @ Param boardSize
+     * @ Param cellsize
+     * @ Param x
+     * @ Param y
      */
     public ImageUtils(BufferedImage image, int boardSize, int cellSize, int x, int y) {
         this.image = image;
@@ -58,17 +58,17 @@ public class ImageUtils {
         h = image.getHeight();
     }
     
-    /**
-     * Получить размер ячейки
-     * @return 
+    /*
+     * Obtener el tamaño de una célula
+     * @ Return
      */
     public int getCellSize() {
         return cellSize;
     }
     
-    /**
-     * Получить координаты игрового поля
-     * @return точка с координатами левого верхнего угла поля
+    /*
+     * Obtener las coordenadas del terreno de juego
+     * @ Return el punto con las coordenadas de la esquina superior izquierda del campo
      */
     public Point getBoardParameters() {
         int[] pixels = new int[w * h];
@@ -78,9 +78,9 @@ public class ImageUtils {
         return board;
     }
     
-    /**
-     * Получить изображение игрового поля
-     * @return картинка игрового поля
+    /*
+     * Obtener un campo de imagen de juego
+     * @ Devolver la imagen igualdad de condiciones
      */
     public BufferedImage getBoardImage() {
         int size = cellSize * boardSize;
@@ -91,16 +91,16 @@ public class ImageUtils {
         }
     }
     
-    /**
-     * Получить координаты кнопок для автоматического нажатия
-     * @param colors массив цветов, по которым будем искать кнопки
-     * @return массив координат с точками, или null - если не удалось найти
+    /*
+     * Obtener las coordenadas de los botones de clic de forma automática
+     * @ Param colores variedad de colores, lo que busca el botón
+     * @ Devolver una matriz de puntos de coordenadas, o null - si usted no puede encontrar
      */
     public Point[] getButtons(int[] colors) {
         Point[] out = new Point[colors.length];
-        // Размер игрового поля в пикселах
+        // Tamaño del campo de juego, en píxeles
         int size = boardSize * cellSize;
-        // Размеры частей изображения, на которых будем искать кнопки
+        // Importe de la imagen, que buscará el botón
         Rectangle[] partsOfImage = new Rectangle[] {
             new Rectangle(0, board.y, board.x, size),   // слева от поля
             new Rectangle(0, 0, w, board.y),            // сверху от поля
@@ -113,13 +113,13 @@ public class ImageUtils {
         for (int i = 0; i < partsOfImage.length; i++) {
             Rectangle rect = partsOfImage[i];
             BufferedImage part = image.getSubimage(rect.x, rect.y, rect.width, rect.height);
-            // Вырезаем часть изображения, в котором будем искать
+            // Clipping región, en la que se busca
             boolean found = true;
             for (int j = 0; j < colors.length; j++) {
                 if (colors[i] == -1) continue;
                 Point pt = findButton(part, colors[j]);
                 if (pt != null) {
-                    // Учитываем смещения относительно частей картинок
+                    // Tener en cuenta la parte compensado sólo de imagen
                     pt.translate(rect.x, rect.y);
                     out[j] = pt;
                 } else {
@@ -129,19 +129,19 @@ public class ImageUtils {
             }
             if (found) return out;
         }
-        // Не удалось найти все точки
+        // No se puede encontrar todos los puntos
         return null;
     }
     
-    /**
-     * Преобразовать массив цветов в графический вид
-     * @param ids массив идентификаторов последовательности
-     * @param palette массив палитры цветов
-     * @return изображение последовательности цветов
+    /*
+     * Convierte una variedad de colores en la vista gráfica
+     * @ Param array ids identificador de secuencia
+     * @ Param array paleta de paletas de colores
+     * @ Return La secuencia de imágenes en color
      */
     public BufferedImage sequenceToImage(byte[] ids, int[] palette) {
-        final int size = 20; // размер каждой ячейки
-        // Разбивать будем по 10 клеток на строку
+        final int size = 20; // tamaño de cada celda
+        // Romperá con 10 celdas por línea
         final int CELLS_IN_ROW = 10;
         int width = CELLS_IN_ROW * size;
         if (width == 0) width = size;
@@ -159,7 +159,7 @@ public class ImageUtils {
         return out;
     }
     
-    /**
+    /*
      * Преобразовать цветное изображение в монохромное.
      * Нужно также учесть, что если поле расположено на светлом
      * фоне, то необходимо инвертировать изображение, чтобы
@@ -179,7 +179,7 @@ public class ImageUtils {
         return bw;
     }
     
-    /**
+    /*
      * Получение состояния яркости фона.
      * @param numPoints сколько точек нужно для определения.
      * @return true - фон светлый, false - тёмный
@@ -203,7 +203,7 @@ public class ImageUtils {
         return (sum > 128);
     }
     
-    /**
+    /*
      * Определить координаты левой верхней ячейки игрового поля.
      * @param boardSize размерность поля (10x10, 14x14 и т.д.)
      * @return координата левого верхнего прямоугольника
@@ -254,7 +254,7 @@ public class ImageUtils {
         return new Point(outX, outY); 
     }
     
-    /**
+    /*
      * Фильтр последовательности от малозначимых значений.
      * @param source последовательность вхождений цвета
      * @return отфильтрованный массив со значениями 0 и 1
@@ -271,7 +271,7 @@ public class ImageUtils {
         return source;
     }
     
-    /**
+    /*
      * Поиск самой длинной последовательности в массиве.
      * @param source входная последовательность из нулей и единиц
      * @return массив параметров - индекс начала последовательности и её длина
@@ -299,7 +299,7 @@ public class ImageUtils {
         return new int[] {maxStart, maxLength};
     }
     
-    /**
+    /*
      * Поиск координаты кнопки с цветом template
      * @param img изображение, на котором будем искать
      * @param template шаблон цвета
@@ -324,7 +324,7 @@ public class ImageUtils {
         return null;
     }
     
-    /**
+    /*
      * Проверка на соответствие цветов друг другу
      * @param color1 первый цвет
      * @param color2 второй цвет
@@ -345,7 +345,7 @@ public class ImageUtils {
                (Math.abs(b1 - b2) <= tolerance);
     }
     
-    /**
+    /*
      * Получение яркости цвета
      * @param color исходный цвет
      * @return яркость (0..255)

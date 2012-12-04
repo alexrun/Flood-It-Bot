@@ -1,4 +1,4 @@
-package main;
+package flooditbot;
 
 import java.awt.AWTException;
 import java.awt.Point;
